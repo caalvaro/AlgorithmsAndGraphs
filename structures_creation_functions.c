@@ -50,6 +50,8 @@ LIST_HEAD* create_head() {
 void append_node(LIST_HEAD* list_head, LIST_NODE* node) {
     LIST_NODE* aux_node;
 
+    node->vertex->degree += 1;
+
     if (!list_head->first_node) {
         list_head->first_node = node;
         return;
