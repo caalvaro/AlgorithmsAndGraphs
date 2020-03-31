@@ -1,4 +1,5 @@
 #include "structures_creation_functions.h"
+#include "print_functions.h"
 
 VERTEX* create_vertex(int name) {
     VERTEX* vertex;
@@ -101,10 +102,11 @@ LIST_HEAD* create_adjacency_list(int number_vertices, int number_edges, int* edg
     return adjacency_list;
 }
 
-int* create_edges_list(int number_edges) {
+int* create_edges_list(int number_vertices, int number_edges) {
     int i;
     int* edges_list;
     int vertex1, vertex2;
+    char input_test[22];
 
     edges_list = (int*) calloc(number_edges * 2, sizeof(int*));
 
@@ -112,7 +114,12 @@ int* create_edges_list(int number_edges) {
 
     for (i = 0; i < number_edges; i++) {
         printf("\nEdge %d: ", i + 1);
-        scanf("%d %d", &vertex1, &vertex2);
+        while (TRUE) {
+            fgets(input_test, sizeof(input_test), stdin);
+
+            if (sscanf(input_test, "%d %d", &vertex1, &vertex2) == 2 && vertex1 <= number_vertices - 1 && vertex2 <= number_vertices - 1) break;
+            printf("\nSomething went wrong. Please give a valid vertex name: ");
+        }
 
         *(edges_list + 2 * i) = vertex1;
         *(edges_list + 2 * i + 1) = vertex2;
@@ -132,7 +139,7 @@ extern GRAPH* create_graph(int number_vertices, int number_edges, int is_digraph
         return NULL;
     }
 
-    edges_list = create_edges_list(number_edges);
+    edges_list = create_edges_list(number_vertices, number_edges);
     adjacency_list = create_adjacency_list(number_vertices, number_edges, edges_list, is_digraph);
 
     graph->number_vertices = number_vertices;
