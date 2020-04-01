@@ -69,7 +69,7 @@ void append_node(LIST_HEAD* list_head, LIST_NODE* node) {
 }
 
 LIST_HEAD* create_adjacency_list(int number_vertices, int number_edges, int* edges_list, int is_digraph) {
-    LIST_HEAD* adjacency_list;
+    LIST_HEAD *adjacency_list, *current_list_head_index;
     int i;
 
     adjacency_list = (LIST_HEAD*) calloc(number_vertices, sizeof(LIST_HEAD));
@@ -89,12 +89,17 @@ LIST_HEAD* create_adjacency_list(int number_vertices, int number_edges, int* edg
         vertex = create_vertex(second_vertex_name);
         node = create_node(vertex);
 
-        append_node(adjacency_list + first_vertex_name, node);
+        current_list_head_index = adjacency_list + first_vertex_name - 1;
+
+        append_node(current_list_head_index, node);
 
         if (!is_digraph) {
             vertex = create_vertex(first_vertex_name);
             node = create_node(vertex);
-            append_node(adjacency_list + second_vertex_name, node);
+
+            current_list_head_index = adjacency_list + second_vertex_name - 1;
+
+            append_node(current_list_head_index, node);
         }
     }
 
@@ -116,7 +121,11 @@ int* create_edges_list(int number_vertices, int number_edges) {
         while (TRUE) {
             fgets(input_test, sizeof(input_test), stdin);
 
-            if (sscanf(input_test, "%d %d", &vertex1, &vertex2) == 2 && vertex1 <= number_vertices - 1 && vertex2 <= number_vertices - 1) break;
+            if (sscanf(input_test, "%d %d", &vertex1, &vertex2) == 2
+                && vertex1 > 0
+                && vertex2 > 0
+                && vertex1 <= number_vertices
+                && vertex2 <= number_vertices) break;
             printf("\nSomething went wrong. Please give a valid vertex name: ");
         }
 

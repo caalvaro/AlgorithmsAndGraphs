@@ -7,7 +7,7 @@ extern void print_adjacency_list(LIST_HEAD* adjacency_list, int number_vertices)
     printf("\n");
 
     for (i = 0; i < number_vertices; i++) {
-        printf("VERTEX %d: ", i);
+        printf("VERTEX %d: ", i + 1);
 
         aux_node = (adjacency_list + i)->first_node;
 
