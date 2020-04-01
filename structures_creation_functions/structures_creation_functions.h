@@ -1,4 +1,4 @@
-#include "struct_and_macro_declarations.h"
+#include "../struct_and_macro_declarations.h"
 
 VERTEX* create_vertex(int name);
 LIST_NODE* create_node(VERTEX* vertex);

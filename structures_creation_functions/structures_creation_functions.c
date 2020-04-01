@@ -1,5 +1,4 @@
 #include "structures_creation_functions.h"
-#include "print_functions.h"
 
 VERTEX* create_vertex(int name) {
     VERTEX* vertex;
