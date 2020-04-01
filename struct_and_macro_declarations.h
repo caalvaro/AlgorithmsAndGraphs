@@ -38,7 +38,6 @@ struct _LIST_HEAD {
 struct _GRAPH {
     int number_vertices;
     int number_edges;
-    int is_digraph;
     LIST_HEAD* adjacency_list;
 };
 

@@ -68,7 +68,7 @@ void append_node(LIST_HEAD* list_head, LIST_NODE* node) {
     return;
 }
 
-LIST_HEAD* create_adjacency_list(int number_vertices, int number_edges, int* edges_list, int is_digraph) {
+LIST_HEAD* create_adjacency_list(int number_vertices, int number_edges, int* edges_list) {
     LIST_HEAD *adjacency_list, *current_list_head_index;
     int i;
 
@@ -93,14 +93,12 @@ LIST_HEAD* create_adjacency_list(int number_vertices, int number_edges, int* edg
 
         append_node(current_list_head_index, node);
 
-        if (!is_digraph) {
-            vertex = create_vertex(first_vertex_name);
-            node = create_node(vertex);
+        vertex = create_vertex(first_vertex_name);
+        node = create_node(vertex);
 
-            current_list_head_index = adjacency_list + second_vertex_name - 1;
+        current_list_head_index = adjacency_list + second_vertex_name - 1;
 
-            append_node(current_list_head_index, node);
-        }
+        append_node(current_list_head_index, node);
     }
 
     return adjacency_list;
@@ -136,7 +134,7 @@ int* create_edges_list(int number_vertices, int number_edges) {
     return edges_list;
 }
 
-extern GRAPH* create_graph(int number_vertices, int number_edges, int is_digraph) {
+extern GRAPH* create_graph(int number_vertices, int number_edges) {
     int* edges_list;
     LIST_HEAD* adjacency_list;
     GRAPH* graph;
@@ -148,11 +146,10 @@ extern GRAPH* create_graph(int number_vertices, int number_edges, int is_digraph
     }
 
     edges_list = create_edges_list(number_vertices, number_edges);
-    adjacency_list = create_adjacency_list(number_vertices, number_edges, edges_list, is_digraph);
+    adjacency_list = create_adjacency_list(number_vertices, number_edges, edges_list);
 
     graph->number_vertices = number_vertices;
     graph->number_edges = number_edges;
-    graph->is_digraph = is_digraph;
     graph->adjacency_list = adjacency_list;
 
     return graph;
