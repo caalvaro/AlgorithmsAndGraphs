@@ -68,6 +68,19 @@ void append_node(LIST_HEAD* list_head, LIST_NODE* node) {
     return;
 }
 
+int edge_already_exists(int* edges_list, int first_vertex_name, int second_vertex_name) {
+    int i = 0;
+
+    while (*(edges_list + i)) {
+        if ((*(edges_list + i) == first_vertex_name && *(edges_list + i + 1) == second_vertex_name)
+            || (*(edges_list + i) == second_vertex_name && *(edges_list + i + 1) == first_vertex_name)) return TRUE;
+
+        i += 2;
+    }
+
+    return FALSE;
+}
+
 LIST_HEAD* create_adjacency_list(int number_vertices, int number_edges, int* edges_list) {
     LIST_HEAD *adjacency_list, *current_list_head_index;
     int i;
@@ -123,7 +136,9 @@ int* create_edges_list(int number_vertices, int number_edges) {
                 && vertex1 > 0
                 && vertex2 > 0
                 && vertex1 <= number_vertices
-                && vertex2 <= number_vertices) break;
+                && vertex2 <= number_vertices
+                && vertex1 != vertex2
+                && !edge_already_exists(edges_list, vertex1, vertex2)) break;
             printf("\nSomething went wrong. Please give a valid vertex name: ");
         }
 
