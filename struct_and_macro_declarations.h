@@ -28,11 +28,14 @@ struct _VERTEX {
 
 struct _LIST_NODE {
     VERTEX* vertex;
+    LIST_NODE* previous_node;
     LIST_NODE* next_node;
 };
 
 struct _LIST_HEAD {
+    int list_size;
     LIST_NODE* first_node;
+    LIST_NODE* last_node;
 };
 
 struct _GRAPH {

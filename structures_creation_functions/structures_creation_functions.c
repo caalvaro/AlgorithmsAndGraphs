@@ -48,22 +48,15 @@ LIST_HEAD* create_head() {
 }
 
 void append_node(LIST_HEAD* list_head, LIST_NODE* node) {
-    LIST_NODE* aux_node;
-
-    node->vertex->degree += 1;
-
     if (!list_head->first_node) {
         list_head->first_node = node;
+        list_head->last_node = node;
         return;
     }
 
-    aux_node = list_head->first_node;
-
-    while (aux_node->next_node) {
-        aux_node = aux_node->next_node;
-    }
-
-    aux_node->next_node = node;
+    list_head->last_node->next_node = node;
+    node->previous_node = list_head->last_node;
+    list_head->last_node = node;
 
     return;
 }
@@ -100,17 +93,17 @@ LIST_HEAD* create_adjacency_list(int number_vertices, int number_edges, int* edg
         second_vertex_name = *(edges_list + 2 * i + 1);
 
         vertex = create_vertex(second_vertex_name);
+        vertex->degree += 1;
         node = create_node(vertex);
 
         current_list_head_index = adjacency_list + first_vertex_name - 1;
-
         append_node(current_list_head_index, node);
 
         vertex = create_vertex(first_vertex_name);
+        vertex->degree += 1;
         node = create_node(vertex);
 
         current_list_head_index = adjacency_list + second_vertex_name - 1;
-
         append_node(current_list_head_index, node);
     }
 
