@@ -1,6 +1,6 @@
 #include "struct_and_macro_declarations.h"
 #include "print_functions/print_functions.h"
-#include "structures_creation_functions/structures_creation_functions.h"
+#include "graph_structure/graph_structure.h"
 
 int main(void) {
     int number_vertices, number_edges;
