@@ -6,5 +6,6 @@
 LIST_NODE* create_node(VERTEX* vertex);
 LIST_HEAD* create_head();
 void append_node(LIST_HEAD* list_head, LIST_NODE* node);
+void remove_node(LIST_HEAD* list_head, LIST_NODE* node);
 
 #endif

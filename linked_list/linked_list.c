@@ -44,3 +44,23 @@ void append_node(LIST_HEAD* list_head, LIST_NODE* node) {
 
     return;
 }
+
+void remove_node(LIST_HEAD* list_head, LIST_NODE* node) {
+    list_head->list_size -= 1;
+
+    if (node == list_head->first_node) {
+        list_head->first_node = NULL;
+        list_head->last_node = NULL;
+    }
+    else if (node == list_head->last_node) {
+        list_head->last_node = list_head->last_node->previous_node;
+        list_head->last_node->next_node = NULL;
+    }
+    else {
+        node->previous_node->next_node = node->next_node;
+        node->next_node->previous_node = node->previous_node;
+    }
+
+    free(node);
+    return;
+}
