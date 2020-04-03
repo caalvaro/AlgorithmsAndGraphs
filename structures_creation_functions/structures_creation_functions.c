@@ -48,6 +48,8 @@ LIST_HEAD* create_head() {
 }
 
 void append_node(LIST_HEAD* list_head, LIST_NODE* node) {
+    list_head->list_size += 1;
+
     if (!list_head->first_node) {
         list_head->first_node = node;
         list_head->last_node = node;
@@ -57,6 +59,21 @@ void append_node(LIST_HEAD* list_head, LIST_NODE* node) {
     list_head->last_node->next_node = node;
     node->previous_node = list_head->last_node;
     list_head->last_node = node;
+
+    return;
+}
+
+void add_vertex_neighbor(LIST_HEAD* adjacency_list, int first_vertex_name, int second_vertex_name) {
+    LIST_HEAD* first_vertex_index_in_adjacency_list;
+    VERTEX* vertex;
+    LIST_NODE* node;
+
+    vertex = create_vertex(second_vertex_name);
+    vertex->degree += 1;
+    node = create_node(vertex);
+
+    first_vertex_index_in_adjacency_list = adjacency_list + first_vertex_name - 1;
+    append_node(first_vertex_index_in_adjacency_list, node);
 
     return;
 }
@@ -75,7 +92,7 @@ int edge_already_exists(int* edges_list, int first_vertex_name, int second_verte
 }
 
 LIST_HEAD* create_adjacency_list(int number_vertices, int number_edges, int* edges_list) {
-    LIST_HEAD *adjacency_list, *current_list_head_index;
+    LIST_HEAD *adjacency_list;
     int i;
 
     adjacency_list = (LIST_HEAD*) calloc(number_vertices, sizeof(LIST_HEAD));
@@ -85,26 +102,14 @@ LIST_HEAD* create_adjacency_list(int number_vertices, int number_edges, int* edg
     }
 
     for (i = 0; i < number_edges; i++) {
-        VERTEX* vertex;
-        LIST_NODE* node;
+
         int first_vertex_name, second_vertex_name;
 
         first_vertex_name = *(edges_list + 2 * i);
         second_vertex_name = *(edges_list + 2 * i + 1);
 
-        vertex = create_vertex(second_vertex_name);
-        vertex->degree += 1;
-        node = create_node(vertex);
-
-        current_list_head_index = adjacency_list + first_vertex_name - 1;
-        append_node(current_list_head_index, node);
-
-        vertex = create_vertex(first_vertex_name);
-        vertex->degree += 1;
-        node = create_node(vertex);
-
-        current_list_head_index = adjacency_list + second_vertex_name - 1;
-        append_node(current_list_head_index, node);
+        add_vertex_neighbor(adjacency_list, first_vertex_name, second_vertex_name);
+        add_vertex_neighbor(adjacency_list, second_vertex_name, first_vertex_name);
     }
 
     return adjacency_list;
