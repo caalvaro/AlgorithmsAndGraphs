@@ -49,6 +49,7 @@ void remove_node(LIST_HEAD* list_head, LIST_NODE* node) {
     list_head->list_size -= 1;
 
     if (node == list_head->first_node) {
+        list_head->first_node->next_node->previous_node = NULL;
         list_head->first_node = NULL;
         list_head->last_node = NULL;
     }
@@ -71,5 +72,5 @@ LIST_NODE* dequeue(LIST_HEAD* list_head) {
     first_node = list_head->first_node;
     remove_node(list_head, list_head->first_node);
 
-    return first_node;    
+    return first_node;
 }
