@@ -64,3 +64,12 @@ void remove_node(LIST_HEAD* list_head, LIST_NODE* node) {
     free(node);
     return;
 }
+
+LIST_NODE* dequeue(LIST_HEAD* list_head) {
+    LIST_NODE* first_node;
+
+    first_node = list_head->first_node;
+    remove_node(list_head, list_head->first_node);
+
+    return first_node;    
+}
