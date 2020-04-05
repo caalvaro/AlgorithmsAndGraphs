@@ -18,12 +18,16 @@ VERTEX* create_vertex(int name) {
     return vertex;
 }
 
-void add_vertex_neighbor(LIST_HEAD* adjacency_list, int first_vertex_name, int second_vertex_name) {
+VERTEX* get_vertex_by_name(VERTEX* vertices_list, int vertex_name) {
+    return vertices_list + vertex_name - 1;
+}
+
+void add_vertex_neighbor(LIST_HEAD* adjacency_list, VERTEX* vertices_list, int first_vertex_name, int second_vertex_name) {
     LIST_HEAD* first_vertex_index_in_adjacency_list;
     VERTEX* vertex;
     LIST_NODE* node;
 
-    vertex = create_vertex(second_vertex_name);
+    vertex = get_vertex_by_name(vertices_list, second_vertex_name);
     vertex->degree += 1;
     node = create_node(vertex);
 
@@ -46,7 +50,7 @@ int edge_already_exists(int* edges_list, int first_vertex_name, int second_verte
     return FALSE;
 }
 
-LIST_HEAD* create_adjacency_list(int number_vertices, int number_edges, int* edges_list) {
+LIST_HEAD* create_adjacency_list(VERTEX* vertices_list, int number_vertices, int number_edges, int* edges_list) {
     LIST_HEAD *adjacency_list;
     int i;
 
@@ -57,14 +61,13 @@ LIST_HEAD* create_adjacency_list(int number_vertices, int number_edges, int* edg
     }
 
     for (i = 0; i < number_edges; i++) {
-
         int first_vertex_name, second_vertex_name;
 
         first_vertex_name = *(edges_list + 2 * i);
         second_vertex_name = *(edges_list + 2 * i + 1);
 
-        add_vertex_neighbor(adjacency_list, first_vertex_name, second_vertex_name);
-        add_vertex_neighbor(adjacency_list, second_vertex_name, first_vertex_name);
+        add_vertex_neighbor(adjacency_list, vertices_list, first_vertex_name, second_vertex_name);
+        add_vertex_neighbor(adjacency_list, vertices_list, second_vertex_name, first_vertex_name);
     }
 
     return adjacency_list;
@@ -102,8 +105,29 @@ int* create_edges_list(int number_vertices, int number_edges) {
     return edges_list;
 }
 
+VERTEX* create_vertices_list(int number_vertices) {
+    VERTEX* vertices_list;
+    int vertex_name;
+
+    vertices_list = (VERTEX*) calloc(number_vertices, sizeof(VERTEX));
+    if (!vertices_list) {
+        printf("Error allocating memory for vertices list\n");
+        return NULL;
+    }
+
+    for (vertex_name = 1; vertex_name <= number_vertices; vertex_name++) {
+        VERTEX* vertex;
+
+        vertex = vertices_list + vertex_name - 1;
+        vertex->name = vertex_name;
+    }
+
+    return vertices_list;
+}
+
 extern GRAPH* create_graph(int number_vertices, int number_edges) {
     int* edges_list;
+    VERTEX* vertices_list;
     LIST_HEAD* adjacency_list;
     GRAPH* graph;
 
@@ -113,11 +137,13 @@ extern GRAPH* create_graph(int number_vertices, int number_edges) {
         return NULL;
     }
 
+    vertices_list = create_vertices_list(number_vertices);
     edges_list = create_edges_list(number_vertices, number_edges);
-    adjacency_list = create_adjacency_list(number_vertices, number_edges, edges_list);
+    adjacency_list = create_adjacency_list(vertices_list, number_vertices, number_edges, edges_list);
 
     graph->number_vertices = number_vertices;
     graph->number_edges = number_edges;
+    graph->vertices_list = vertices_list;
     graph->adjacency_list = adjacency_list;
 
     return graph;

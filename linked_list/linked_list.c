@@ -10,6 +10,7 @@ LIST_NODE* create_node(VERTEX* vertex) {
     }
 
     node->vertex = vertex;
+    node->previous_node = NULL;
     node->next_node = NULL;
 
     return node;

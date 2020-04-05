@@ -41,6 +41,7 @@ struct _LIST_HEAD {
 struct _GRAPH {
     int number_vertices;
     int number_edges;
+    VERTEX* vertices_list;
     LIST_HEAD* adjacency_list;
 };
 
