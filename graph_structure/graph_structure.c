@@ -22,6 +22,10 @@ VERTEX* get_vertex_by_name(VERTEX* vertices_list, int vertex_name) {
     return vertices_list + vertex_name - 1;
 }
 
+LIST_HEAD* get_adjacent_vertices(LIST_HEAD* adjacency_list, int vertex_name) {
+    return adjacency_list + vertex_name - 1;
+}
+
 void add_vertex_neighbor(LIST_HEAD* adjacency_list, VERTEX* vertices_list, int first_vertex_name, int second_vertex_name) {
     LIST_HEAD* first_vertex_index_in_adjacency_list;
     VERTEX* vertex;
@@ -120,6 +124,7 @@ VERTEX* create_vertices_list(int number_vertices) {
 
         vertex = vertices_list + vertex_name - 1;
         vertex->name = vertex_name;
+        vertex->distance = INFINITY;
     }
 
     return vertices_list;
@@ -145,6 +150,7 @@ extern GRAPH* create_graph(int number_vertices, int number_edges) {
     graph->number_edges = number_edges;
     graph->vertices_list = vertices_list;
     graph->adjacency_list = adjacency_list;
+    graph->was_explored = FALSE;
 
     return graph;
 }

@@ -1,6 +1,7 @@
 #include "struct_and_macro_declarations.h"
 #include "print_functions/print_functions.h"
 #include "graph_structure/graph_structure.h"
+#include "graph_algorithms/graph_algorithms.h"
 
 int main(void) {
     int number_vertices, number_edges;
@@ -26,6 +27,9 @@ int main(void) {
     graph = create_graph(number_vertices, number_edges);
 
     print_adjacency_list(graph->adjacency_list, graph->number_vertices);
+
+    breadth_first_search(graph, 1);
+    print_vertices_list(graph->vertices_list, graph->number_vertices);
 
     return 0;
 }

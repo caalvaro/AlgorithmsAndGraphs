@@ -43,6 +43,7 @@ struct _GRAPH {
     int number_edges;
     VERTEX* vertices_list;
     LIST_HEAD* adjacency_list;
+    int was_explored;
 };
 
 #endif
