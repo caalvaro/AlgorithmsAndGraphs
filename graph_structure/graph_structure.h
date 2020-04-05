@@ -12,6 +12,7 @@ BOOLEAN edge_already_exists(int* edges_list, int first_vertex_name, int second_v
 LIST_HEAD* create_adjacency_list(VERTEX* vertices_list, int number_vertices, int number_edges, int* edges_list);
 int* create_edges_list(int number_vertices, int number_edges);
 VERTEX* create_vertices_list(int number_vertices);
+GRAPH* create_random_graph(int number_vertices, int number_edges);
 extern GRAPH* create_graph(int number_vertices, int number_edges);
 
 #endif

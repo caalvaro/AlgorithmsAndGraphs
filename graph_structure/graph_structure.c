@@ -117,6 +117,37 @@ int* create_edges_list(int number_vertices, int number_edges) {
     return edges_list;
 }
 
+int* create_random_edges_list(int number_vertices, int number_edges) {
+    int i;
+    int* edges_list;
+    int vertex1, vertex2;
+
+    edges_list = (int*) calloc(number_edges * 2, sizeof(int*));
+    if (edges_list == NULL) {
+        printf("Error allocating memory for edges list\n");
+        return NULL;
+    }
+
+    for (i = 0; i < number_edges; i++) {
+        while (TRUE) {
+            vertex1 = (rand() + 1) % number_vertices;
+            vertex2 = (rand() + 1) % number_vertices;
+
+            if (vertex1 > 0
+                && vertex2 > 0
+                && vertex1 <= number_vertices
+                && vertex2 <= number_vertices
+                && vertex1 != vertex2
+                && !edge_already_exists(edges_list, vertex1, vertex2)) break;
+        }
+
+        *(edges_list + 2 * i) = vertex1;
+        *(edges_list + 2 * i + 1) = vertex2;
+    }
+
+    return edges_list;
+}
+
 VERTEX* create_vertices_list(int number_vertices) {
     VERTEX* vertices_list;
     int vertex_name;
@@ -136,6 +167,31 @@ VERTEX* create_vertices_list(int number_vertices) {
     }
 
     return vertices_list;
+}
+
+GRAPH* create_random_graph(int number_vertices, int number_edges) {
+    int* edges_list;
+    VERTEX* vertices_list;
+    LIST_HEAD* adjacency_list;
+    GRAPH* graph;
+
+    graph = (GRAPH*) malloc(sizeof(GRAPH));
+    if (graph == NULL) {
+        printf("Error allocating memory for graph\n");
+        return NULL;
+    }
+
+    vertices_list = create_vertices_list(number_vertices);
+    edges_list = create_random_edges_list(number_vertices, number_edges);
+    adjacency_list = create_adjacency_list(vertices_list, number_vertices, number_edges, edges_list);
+
+    graph->number_vertices = number_vertices;
+    graph->number_edges = number_edges;
+    graph->vertices_list = vertices_list;
+    graph->adjacency_list = adjacency_list;
+    graph->was_explored = FALSE;
+
+    return graph;
 }
 
 extern GRAPH* create_graph(int number_vertices, int number_edges) {
