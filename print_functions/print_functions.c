@@ -11,11 +11,11 @@ extern void print_adjacency_list(LIST_HEAD* adjacency_list, int number_vertices)
 
         aux_node = (adjacency_list + i)->first_node;
 
-        if (!aux_node) {
+        if (aux_node == NULL) {
             printf("*");
         }
 
-        while (aux_node) {
+        while (aux_node != NULL) {
             printf("%d ", aux_node->vertex->name);
             aux_node = aux_node->next_node;
         }

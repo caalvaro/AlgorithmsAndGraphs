@@ -18,10 +18,10 @@ void breadth_first_search(GRAPH* graph, int start_vertex_name) {
 
         adjacent_vertices_of_exploring_vertex = get_adjacent_vertices(graph->adjacency_list, exploring_vertex_node->vertex->name);
 
-        if (!adjacent_vertices_of_exploring_vertex->first_node) continue;
+        if (adjacent_vertices_of_exploring_vertex->first_node == NULL) continue;
         adjacent_vertex_node = adjacent_vertices_of_exploring_vertex->first_node;
 
-        while (adjacent_vertex_node) {
+        while (adjacent_vertex_node != NULL) {
             if (adjacent_vertex_node->vertex->color == WHITE) {
                 adjacent_vertex_node->vertex->color = GRAY;
                 adjacent_vertex_node->vertex->distance = exploring_vertex_node->vertex->distance + 1;

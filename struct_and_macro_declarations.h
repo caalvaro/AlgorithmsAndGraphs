@@ -17,6 +17,7 @@ typedef struct _VERTEX VERTEX;
 typedef struct _LIST_NODE LIST_NODE;
 typedef struct _LIST_HEAD LIST_HEAD;
 typedef struct _GRAPH GRAPH;
+typedef int BOOLEAN;
 
 struct _VERTEX {
     int name;
@@ -43,7 +44,7 @@ struct _GRAPH {
     int number_edges;
     VERTEX* vertices_list;
     LIST_HEAD* adjacency_list;
-    int was_explored;
+    BOOLEAN was_explored;
 };
 
 #endif

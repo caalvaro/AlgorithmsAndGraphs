@@ -4,7 +4,7 @@ LIST_NODE* create_node(VERTEX* vertex) {
     LIST_NODE* node;
 
     node = (LIST_NODE*) malloc(sizeof(LIST_NODE));
-    if (!node) {
+    if (node == NULL) {
         printf("Error allocating memory for list node\n");
         return NULL;
     }
@@ -20,7 +20,7 @@ LIST_HEAD* create_head() {
     LIST_HEAD* head;
 
     head = (LIST_HEAD*) malloc(sizeof(LIST_HEAD));
-    if (!head) {
+    if (head == NULL) {
         printf("Error allocating memory for list head\n");
         return NULL;
     }
@@ -33,7 +33,7 @@ LIST_HEAD* create_head() {
 void append_node(LIST_HEAD* list_head, LIST_NODE* node) {
     list_head->list_size += 1;
 
-    if (!list_head->first_node) {
+    if (list_head->first_node == NULL) {
         list_head->first_node = node;
         list_head->last_node = node;
         return;

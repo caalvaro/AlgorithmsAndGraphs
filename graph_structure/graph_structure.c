@@ -4,7 +4,7 @@ VERTEX* create_vertex(int name) {
     VERTEX* vertex;
 
     vertex = (VERTEX*) malloc(sizeof(VERTEX));
-    if (!vertex) {
+    if (vertex == NULL) {
         printf("Error allocating memory for graph vertex\n");
         return NULL;
     }
@@ -41,12 +41,16 @@ void add_vertex_neighbor(LIST_HEAD* adjacency_list, VERTEX* vertices_list, int f
     return;
 }
 
-int edge_already_exists(int* edges_list, int first_vertex_name, int second_vertex_name) {
+BOOLEAN edge_already_exists(int* edges_list, int first_vertex_name, int second_vertex_name) {
     int i = 0;
+    int vertex1_name_from_edges_list = 1, vertex2_name_from_edges_list;
 
-    while (*(edges_list + i)) {
-        if ((*(edges_list + i) == first_vertex_name && *(edges_list + i + 1) == second_vertex_name)
-            || (*(edges_list + i) == second_vertex_name && *(edges_list + i + 1) == first_vertex_name)) return TRUE;
+    while (vertex1_name_from_edges_list != 0) {
+        vertex1_name_from_edges_list = *(edges_list + i);
+        vertex2_name_from_edges_list = *(edges_list + i + 1);
+
+        if ((vertex1_name_from_edges_list == first_vertex_name && vertex2_name_from_edges_list == second_vertex_name)
+            || (vertex1_name_from_edges_list == second_vertex_name && vertex2_name_from_edges_list == first_vertex_name)) return TRUE;
 
         i += 2;
     }
@@ -59,7 +63,7 @@ LIST_HEAD* create_adjacency_list(VERTEX* vertices_list, int number_vertices, int
     int i;
 
     adjacency_list = (LIST_HEAD*) calloc(number_vertices, sizeof(LIST_HEAD));
-    if (!adjacency_list) {
+    if (adjacency_list == NULL) {
         printf("Error allocating memory for adjacency list\n");
         return NULL;
     }
@@ -84,6 +88,10 @@ int* create_edges_list(int number_vertices, int number_edges) {
     char input_test[22];
 
     edges_list = (int*) calloc(number_edges * 2, sizeof(int*));
+    if (edges_list == NULL) {
+        printf("Error allocating memory for edges list\n");
+        return NULL;
+    }
 
     printf("\n\nFrom now on, insert each edge\nExample: An edge connecting vertice 1 to 3 will be entered \"1 3\"\n");
 
@@ -114,7 +122,7 @@ VERTEX* create_vertices_list(int number_vertices) {
     int vertex_name;
 
     vertices_list = (VERTEX*) calloc(number_vertices, sizeof(VERTEX));
-    if (!vertices_list) {
+    if (vertices_list == NULL) {
         printf("Error allocating memory for vertices list\n");
         return NULL;
     }
@@ -137,7 +145,7 @@ extern GRAPH* create_graph(int number_vertices, int number_edges) {
     GRAPH* graph;
 
     graph = (GRAPH*) malloc(sizeof(GRAPH));
-    if (!graph) {
+    if (graph == NULL) {
         printf("Error allocating memory for graph\n");
         return NULL;
     }
