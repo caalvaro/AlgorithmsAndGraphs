@@ -39,3 +39,20 @@ void breadth_first_search(GRAPH* graph, int start_vertex_name) {
     graph->was_explored = TRUE;
     return;
 }
+
+BOOLEAN is_connected(GRAPH* graph) {
+    int i, start_vertex_name = 1;
+
+    if (graph->was_explored == FALSE) {
+        breadth_first_search(graph, start_vertex_name);
+    }
+
+    for (i = 0; i < graph->number_vertices; i++) {
+        VERTEX* vertex;
+        vertex = graph->vertices_list + i;
+
+        if (vertex->color == WHITE) return FALSE;
+    }
+
+    return TRUE;
+}

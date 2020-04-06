@@ -29,6 +29,9 @@ int main(void) {
     print_adjacency_list(graph->adjacency_list, graph->number_vertices);
 
     breadth_first_search(graph, 1);
+
+    printf("Is connected? %d\n", is_connected(graph));
+    
     print_vertices_list(graph->vertices_list, graph->number_vertices);
 
     return 0;

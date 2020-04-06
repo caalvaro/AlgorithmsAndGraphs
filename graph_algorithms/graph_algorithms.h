@@ -3,3 +3,4 @@
 #include "../linked_list/linked_list.h"
 
 void breadth_first_search(GRAPH* graph, int start_vertex_name);
+BOOLEAN is_connected(GRAPH* graph);
