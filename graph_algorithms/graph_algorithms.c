@@ -13,12 +13,12 @@ void breadth_first_search(GRAPH* graph, int start_vertex_name) {
     queue = create_head();
     append_node(queue, create_node(start_vertex));
 
-    while (queue->list_size != 0) {
+    while (queue->list_size > 0) {
         exploring_vertex_node = dequeue(queue);
 
         adjacent_vertices_of_exploring_vertex = get_adjacent_vertices(graph->adjacency_list, exploring_vertex_node->vertex->name);
 
-        if (adjacent_vertices_of_exploring_vertex->first_node == NULL) continue;
+        if (adjacent_vertices_of_exploring_vertex->list_size == 0) continue;
         adjacent_vertex_node = adjacent_vertices_of_exploring_vertex->first_node;
 
         while (adjacent_vertex_node != NULL) {
